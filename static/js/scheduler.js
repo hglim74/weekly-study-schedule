@@ -51,7 +51,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'timeGridWeek',
-        firstDay: 1, // Start week on Monday
         height: 'auto', // Remove scrollbar
         headerToolbar: {
             left: 'prev,next today',
