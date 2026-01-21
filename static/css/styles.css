@@ -92,9 +92,8 @@ body {
 }
 
 .fc-event-main {
-    white-space: nowrap;
+    white-space: pre-wrap;
     overflow: hidden;
-    text-overflow: ellipsis;
     font-weight: 600;
     width: 100%;
 }
