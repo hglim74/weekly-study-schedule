@@ -33,9 +33,34 @@
                     <textarea class="form-control" id="eventTitle" placeholder="공부할 과목 입력" rows="3"></textarea>
                 </div>
                 <div class="mb-3">
-                    <label for="eventColor" class="form-label">색상 선택</label>
-                    <input type="color" class="form-control form-control-color" id="eventColor" value="#3788d8"
-                        title="Choose your color">
+                    <label class="form-label">색상 선택</label>
+                    <input type="hidden" id="eventColor" value="#3788d8">
+                    <div class="d-flex gap-2 flex-wrap" id="color-options">
+                        <button type="button" class="btn rounded-circle p-0 border border-3 border-dark"
+                            style="width: 30px; height: 30px; background-color: #3788d8;" data-color="#3788d8"
+                            title="Blue"></button>
+                        <button type="button" class="btn rounded-circle p-0 border"
+                            style="width: 30px; height: 30px; background-color: #6610f2;" data-color="#6610f2"
+                            title="Indigo"></button>
+                        <button type="button" class="btn rounded-circle p-0 border"
+                            style="width: 30px; height: 30px; background-color: #6f42c1;" data-color="#6f42c1"
+                            title="Purple"></button>
+                        <button type="button" class="btn rounded-circle p-0 border"
+                            style="width: 30px; height: 30px; background-color: #e83e8c;" data-color="#e83e8c"
+                            title="Pink"></button>
+                        <button type="button" class="btn rounded-circle p-0 border"
+                            style="width: 30px; height: 30px; background-color: #fd7e14;" data-color="#fd7e14"
+                            title="Orange"></button>
+                        <button type="button" class="btn rounded-circle p-0 border"
+                            style="width: 30px; height: 30px; background-color: #ffc107;" data-color="#ffc107"
+                            title="Yellow"></button>
+                        <button type="button" class="btn rounded-circle p-0 border"
+                            style="width: 30px; height: 30px; background-color: #28a745;" data-color="#28a745"
+                            title="Green"></button>
+                        <button type="button" class="btn rounded-circle p-0 border"
+                            style="width: 30px; height: 30px; background-color: #20c997;" data-color="#20c997"
+                            title="Teal"></button>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">

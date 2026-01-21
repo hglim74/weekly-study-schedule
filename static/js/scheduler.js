@@ -26,6 +26,29 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     const csrftoken = getCookie('csrftoken');
 
+    // Color Selection Logic
+    const colorOptions = document.querySelectorAll('#color-options button');
+
+    function updateColorSelectionUI(selectedColor) {
+        eventColorInput.value = selectedColor;
+        colorOptions.forEach(btn => {
+            const btnColor = btn.dataset.color;
+            if (btnColor === selectedColor) {
+                btn.classList.add('border-dark', 'border-3');
+                btn.classList.remove('border');
+            } else {
+                btn.classList.remove('border-dark', 'border-3');
+                btn.classList.add('border');
+            }
+        });
+    }
+
+    colorOptions.forEach(btn => {
+        btn.addEventListener('click', function () {
+            updateColorSelectionUI(this.dataset.color);
+        });
+    });
+
     var calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'timeGridWeek',
         headerToolbar: {
@@ -56,9 +79,11 @@ document.addEventListener('DOMContentLoaded', function () {
             currentEvent = null;
             modalTitle.innerText = "새 스케줄 만들기";
             eventTitleInput.value = "";
-            eventColorInput.value = "#3788d8";
             eventIdInput.value = "";
             deleteBtn.classList.add('d-none');
+
+            // Default Color
+            updateColorSelectionUI("#3788d8");
 
             // Temporary Start/End storage
             eventIdInput.dataset.start = info.startStr;
@@ -72,9 +97,11 @@ document.addEventListener('DOMContentLoaded', function () {
             currentEvent = info.event;
             modalTitle.innerText = "스케줄 수정";
             eventTitleInput.value = currentEvent.title;
-            eventColorInput.value = currentEvent.backgroundColor;
             eventIdInput.value = currentEvent.id;
             deleteBtn.classList.remove('d-none');
+
+            // Set Color
+            updateColorSelectionUI(currentEvent.backgroundColor);
 
             eventModal.show();
         }
@@ -214,8 +241,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const { jsPDF } = window.jspdf;
 
-            // A4 Landscape: 297mm x 210mm
-            const doc = new jsPDF('l', 'mm', 'a4');
+            // A4 Portrait: 210mm x 297mm
+            const doc = new jsPDF('p', 'mm', 'a4');
 
             // Element to capture
             const element = document.getElementById('calendar');
@@ -226,8 +253,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
             html2canvas(element, { scale: 2 }).then(canvas => {
                 const imgData = canvas.toDataURL('image/png');
-                const imgWidth = 297;
-                const pageHeight = 210;
+                const imgWidth = 210;
+                const pageHeight = 297;
                 const imgHeight = canvas.height * imgWidth / canvas.width;
 
                 let heightLeft = imgHeight;
