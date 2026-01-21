@@ -242,8 +242,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const { jsPDF } = window.jspdf;
 
-            // A4 Portrait: 210mm x 297mm
-            const doc = new jsPDF('p', 'mm', 'a4');
+            // A4 Landscape: 297mm x 210mm
+            const doc = new jsPDF('l', 'mm', 'a4');
 
             // Element to capture
             const element = document.getElementById('calendar');
@@ -254,8 +254,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
             html2canvas(element, { scale: 2 }).then(canvas => {
                 const imgData = canvas.toDataURL('image/png');
-                const imgWidth = 210;
-                const pageHeight = 297;
+                const imgWidth = 297;
+                const pageHeight = 210;
                 const imgHeight = canvas.height * imgWidth / canvas.width;
 
                 let heightLeft = imgHeight;
