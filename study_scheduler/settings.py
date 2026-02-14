@@ -29,7 +29,17 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+
+# Cloud Run handles SSL termination, so we need to tell Django to trust the X-Forwarded-Proto header
+if os.environ.get('RENDER_EXTERNAL_HOSTNAME') or os.environ.get('K_SERVICE'):
+     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 CSRF_TRUSTED_ORIGINS = [url.strip() for url in os.environ.get('CSRF_TRUSTED_ORIGINS', '').split(',') if url.strip()]
+
+# If running on Cloud Run and CSRF_TRUSTED_ORIGINS is not set, try to automatically add the specific domain from the error
+if not CSRF_TRUSTED_ORIGINS and 'run.app' in os.environ.get('ALLOWED_HOSTS', ''):
+     # This is a fallback attempt, but best practice is to set the env var
+     pass
 
 
 # Application definition

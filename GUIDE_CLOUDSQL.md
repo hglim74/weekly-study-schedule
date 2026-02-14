@@ -94,7 +94,14 @@ Cloud Run에 배포 후 로그인 시 `CSRF verification failed` 에러가 발�
 **Cloud Run 환경 변수 설정:**
 
 *   **키**: `CSRF_TRUSTED_ORIGINS`
-*   **값**: `https://your-service-url.run.app` (여러 개일 경우 쉼표로 구분)
+*   **값**: `https://your-service-url.run.app` (반드시 `https://` 포함)
+
+**중요**: 설정 후 반드시 **새 버전 배포(Deploy new revision)** 를 해야 적용됩니다.
+
+### 추가 점검 사항
+
+1.  **HTTPS 확인**: URL이 `http://`가 아닌 `https://`로 시작하는지 확인하세요.
+2.  **Secret Key**: 프로덕션 환경에서는 `SECRET_KEY`도 환경 변수로 관리하는 것이 좋습니다.
 
 예를 들어, 서비스 URL이 `https://weekly-study-schedule-4542269301.europe-west1.run.app`라면:
 `https://weekly-study-schedule-4542269301.europe-west1.run.app` 를 값으로 설정하세요.
