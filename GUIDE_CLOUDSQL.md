@@ -106,6 +106,27 @@ Cloud Run에 배포 후 로그인 시 `CSRF verification failed` 에러가 발�
 예를 들어, 서비스 URL이 `https://weekly-study-schedule-4542269301.europe-west1.run.app`라면:
 `https://weekly-study-schedule-4542269301.europe-west1.run.app` 를 값으로 설정하세요.
 
+## 7. Cloud Run 배포 시 DB 연결 설정 (필수)
+
+**현재 에러 (`no such table: auth_user`)는 Cloud Run이 Cloud SQL이 아닌 로컬 SQLite를 사용하고 있기 때문에 발생합니다.**
+Cloud Run 배포 시에도 로컬 개발 환경과 마찬가지로 **환경 변수**를 설정해줘야 Cloud SQL에 연결됩니다.
+
+Cloud Run 서비스 수정 페이지의 **변수 및 보안 비밀(Variables & Secrets)** 탭에서 다음 환경 변수들을 추가하세요:
+
+| 키 | 값 (예시) | 설명 |
+| :--- | :--- | :--- |
+| `DB_ENGINE` | `django.db.backends.postgresql` | **필수** |
+| `DB_NAME` | `study_scheduler` | Cloud SQL에 생성한 DB 이름 |
+| `DB_USER` | `postgres` | DB 사용자 이름 |
+| `DB_PASSWORD` | `your_password` | DB 비밀번호 |
+| `DB_HOST` | `/cloudsql/INSTANCE_CONNECTION_NAME` | **중요**: `/cloudsql/` 로 시작하는 인스턴스 연결 이름 |
+| `DB_PORT` | `5432` | 포트 번호 |
+
+> **주의**: Cloud Run에서 `DB_HOST`는 IP 주소가 아니라 **/cloudsql/프로젝트ID:리전:인스턴스ID** 형식의 유닉스 소켓 경로를 사용해야 합니다.
+> 인스턴스 연결 이름은 Google Cloud Console의 SQL 인스턴스 개요 페이지에서 복사할 수 있습니다.
+
+또한, **Cloud SQL 연결(Cloud SQL connections)** 섹션에서 해당 인스턴스를 선택하여 연결을 활성화해야 합니다.
+
 ## 참고: SQLite로 돌아가기
 
 Cloud SQL 설정을 해제하고 로컬 SQLite를 다시 사용하려면, 설정했던 환경 변수를 해제하면 됩니다.
