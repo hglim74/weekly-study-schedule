@@ -86,6 +86,19 @@ python manage.py runserver
 
 서버가 정상적으로 실행되면 Cloud SQL 데이터베이스를 사용하게 됩니다.
 
+
+## 6. Cloud Run 배포 시 주의사항 (CSRF 에러 해결)
+
+Cloud Run에 배포 후 로그인 시 `CSRF verification failed` 에러가 발생하면, `CSRF_TRUSTED_ORIGINS` 환경 변수를 설정해야 합니다.
+
+**Cloud Run 환경 변수 설정:**
+
+*   **키**: `CSRF_TRUSTED_ORIGINS`
+*   **값**: `https://your-service-url.run.app` (여러 개일 경우 쉼표로 구분)
+
+예를 들어, 서비스 URL이 `https://weekly-study-schedule-4542269301.europe-west1.run.app`라면:
+`https://weekly-study-schedule-4542269301.europe-west1.run.app` 를 값으로 설정하세요.
+
 ## 참고: SQLite로 돌아가기
 
 Cloud SQL 설정을 해제하고 로컬 SQLite를 다시 사용하려면, 설정했던 환경 변수를 해제하면 됩니다.
